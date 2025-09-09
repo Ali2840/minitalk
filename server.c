@@ -1,6 +1,4 @@
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "minitalk.h"
 
 void	signal_handler(int signum, siginfo_t *info, void *context)
 {
@@ -13,10 +11,7 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
     if(i == 8)
     {
         if(c == '\0')
-        {
             write(1, "\n", 1);
-            kill(info->si_pid, SIGUSR2);
-        }
         else
             write(1, &c, 1);
         i = 0;
@@ -24,18 +19,6 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
     }
     kill(info->si_pid, SIGUSR1);
 }
-// int	main(void)
-// {
-// 	int pid;
-// 	pid = getpid();
-// 	printf("%d\n", pid);
-// 	signal(SIGUSR1, signal_handler);
-// 	signal(SIGUSR2, signal_handler);
-// 	while (1)
-// 	{
-// 		pause();
-// 	}
-// }
 
 int main(void)
 {
@@ -48,9 +31,7 @@ int main(void)
     sigaction(SIGUSR1, &sa, NULL);
     sigaction(SIGUSR2, &sa, NULL);
 
-    printf("%d\n", getpid());
+    ft_printf("%d\n", getpid());
     while(1)
-    {
         pause();
-    }
 }
